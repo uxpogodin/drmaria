@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <title>В баню</title>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="googlebot" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
@@ -347,7 +349,7 @@ const CONFIG = {
   time:             "18:00",
   address:          "ул. Берёзовая, 12",
   mapsUrl:          "https://maps.google.com/?q=ул.+Берёзовая+12",
-  telegramUsername: "alenabday",
+  telegramUsername: "+79167205415",
   // Функции принимают имя гостя из URL
   telegramText:     (name) => `Привет, Маша! Это ${name} — буду ${CONFIG.date} в ${CONFIG.time} 🔥`,
   inviteTitle:      (name) => `Я отмечаю день рождения\nи зову тебя в баню 🔥`,
@@ -371,7 +373,7 @@ document.getElementById("detail-time").textContent    = CONFIG.time;
 document.getElementById("detail-address").textContent = CONFIG.address;
 document.getElementById("maps-link").href = CONFIG.mapsUrl;
 document.getElementById("cta-btn").href =
-  `https://t.me/${CONFIG.telegramUsername}?text=${encodeURIComponent(CONFIG.telegramText(guestName))}`;
+  `https://t.me/${CONFIG.telegramUsername}`;
 document.getElementById("invite-title").innerHTML =
   CONFIG.inviteTitle(guestName).replace(/\n/g, "<br>");
 
