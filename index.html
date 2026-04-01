@@ -13,62 +13,165 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:    #0a0806;
-      --acc:   #d94200;
-      --gold:  #bf8010;
-      --gold2: #e8a828;
-      --text:  #ecddc8;
-      --muted: #6e5e46;
+      --wood-deep:  #0d0905;
+      --wood-dark:  #1a1008;
+      --wood-mid:   #2e1e0e;
+      --ember:      #c85c18;
+      --amber:      #d4861e;
+      --amber-lt:   #e8b84a;
+      --cream:      #eedfc4;
+      --muted:      #7a6040;
     }
 
     html, body {
       width: 100%; height: 100dvh;
       overflow: hidden;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--wood-deep);
+      color: var(--cream);
       font-family: 'Inter', sans-serif;
       -webkit-user-select: none; user-select: none;
       -webkit-tap-highlight-color: transparent;
       touch-action: none;
     }
 
-    /* ── Ambient orbs ── */
-    .orb {
-      position: fixed; border-radius: 50%;
-      pointer-events: none; z-index: 0;
-      filter: blur(70px);
+    /* ── Wood plank background ── */
+    #wood-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        /* Fine grain lines */
+        repeating-linear-gradient(
+          178deg,
+          transparent 0px,
+          transparent 28px,
+          rgba(0,0,0,.18) 28px,
+          rgba(0,0,0,.18) 29px,
+          transparent 29px,
+          transparent 52px,
+          rgba(255,200,100,.025) 52px,
+          rgba(255,200,100,.025) 53px
+        ),
+        /* Plank separators */
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 118px,
+          rgba(0,0,0,.25) 118px,
+          rgba(0,0,0,.25) 120px
+        ),
+        /* Base wood gradient */
+        linear-gradient(165deg,
+          #1e1108 0%,
+          #120c05 30%,
+          #1a1008 55%,
+          #0f0904 80%,
+          #170f07 100%
+        );
     }
-    .orb-1 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(217,66,0,.14) 0%, transparent 70%);
-      bottom: -130px; left: -90px;
-      animation: ob1 16s ease-in-out infinite;
-    }
-    .orb-2 {
-      width: 260px; height: 260px;
-      background: radial-gradient(circle, rgba(191,128,16,.1) 0%, transparent 70%);
-      top: 0; right: -50px;
-      animation: ob2 20s ease-in-out infinite;
-    }
-    @keyframes ob1 { 0%,100%{transform:translate(0,0)} 45%{transform:translate(28px,-22px)} 75%{transform:translate(-12px,18px)} }
-    @keyframes ob2 { 0%,100%{transform:translate(0,0)} 40%{transform:translate(-18px,26px)} 70%{transform:translate(14px,-14px)} }
-    @media (prefers-reduced-motion: reduce) { .orb { animation: none; } }
 
-    /* ── Content layer ── */
+    /* ── Ember glow from below ── */
+    #ember-glow {
+      position: fixed;
+      bottom: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 110vw; height: 220px;
+      background: radial-gradient(ellipse at 50% 100%,
+        rgba(180,60,10,.38) 0%,
+        rgba(140,40,5,.18) 38%,
+        transparent 70%
+      );
+      pointer-events: none; z-index: 0;
+      filter: blur(8px);
+    }
+
+    /* ── Top amber lamp glow ── */
+    #lamp-glow {
+      position: fixed;
+      top: -40px; left: 50%;
+      transform: translateX(-50%);
+      width: 70vw; height: 160px;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(200,120,20,.18) 0%,
+        rgba(180,100,10,.08) 45%,
+        transparent 70%
+      );
+      pointer-events: none; z-index: 0;
+      filter: blur(6px);
+    }
+
+    /* ── Venik watermark ── */
+    #venik-bg {
+      position: fixed;
+      right: -30px; bottom: -20px;
+      width: min(72vw, 310px);
+      transform: rotate(-18deg);
+      transform-origin: bottom right;
+      opacity: .09;
+      pointer-events: none; z-index: 0;
+      filter: sepia(80%) brightness(.7);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* ── App layout ── */
     #app {
       position: fixed; inset: 0; z-index: 1;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 24px 28px;
-      gap: 0;
+      padding: 20px 32px 28px;
     }
 
-    /* Photo */
+    /* ── Stamp header ── */
+    .stamp-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      margin-bottom: 18px;
+    }
+    .stamp-label {
+      font-size: .6rem; font-weight: 600;
+      color: var(--amber);
+      letter-spacing: .28em; text-transform: uppercase;
+      opacity: .65;
+      margin-bottom: 4px;
+    }
+    .stamp-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(2.1rem, 9vw, 3rem);
+      color: var(--amber-lt);
+      letter-spacing: .05em;
+      line-height: 1;
+      text-align: center;
+      text-shadow: 0 2px 24px rgba(200,90,20,.45), 0 0 2px rgba(220,160,60,.2);
+    }
+
+    /* ── Horizontal rule (wood burn style) ── */
+    .burn-rule {
+      width: 100%;
+      display: flex; align-items: center; gap: 10px;
+      margin: 14px 0;
+      flex-shrink: 0;
+    }
+    .burn-rule::before,
+    .burn-rule::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(190,120,30,.35), transparent);
+    }
+    .burn-rule-icon {
+      font-size: .75rem; opacity: .5;
+      flex-shrink: 0;
+    }
+
+    /* ── Guest block ── */
+    .guest-block {
+      display: flex; align-items: center;
+      gap: 14px;
+      width: 100%;
+      margin-bottom: 2px;
+    }
     .photo-wrap {
       position: relative;
-      width: 78px; height: 78px;
+      width: 58px; height: 58px;
       flex-shrink: 0;
-      margin-bottom: 14px;
     }
     .photo-wrap img,
     .photo-fallback {
@@ -79,139 +182,130 @@
     }
     .photo-fallback {
       display: flex; align-items: center; justify-content: center;
-      background: #1c1208;
+      background: var(--wood-mid);
       font-family: 'Playfair Display', serif;
       font-style: italic; font-weight: 700;
-      font-size: 1.9rem;
-      color: rgba(191,128,16,.6);
+      font-size: 1.5rem;
+      color: rgba(212,134,30,.7);
     }
     .photo-ring {
-      position: absolute;
-      inset: -3px;
+      position: absolute; inset: -2.5px;
       border-radius: 50%;
-      border: 1.5px solid var(--gold);
+      border: 1.4px solid rgba(212,134,30,.55);
       pointer-events: none;
     }
-    .photo-ring-outer {
-      position: absolute;
-      inset: -7px;
-      border-radius: 50%;
-      border: .8px solid rgba(191,128,16,.22);
-      pointer-events: none;
-    }
-
-    /* Text */
-    .greeting {
-      font-size: .7rem; font-weight: 300;
+    .guest-text { flex: 1; min-width: 0; }
+    .guest-greeting {
+      font-size: .65rem; font-weight: 400;
       color: var(--muted);
-      letter-spacing: .2em; text-transform: uppercase;
-      margin-bottom: 3px;
+      letter-spacing: .18em; text-transform: uppercase;
+      margin-bottom: 2px;
     }
     .guest-name {
       font-family: 'Playfair Display', serif;
       font-style: italic; font-weight: 700;
-      font-size: clamp(1.55rem, 6.5vw, 2.1rem);
-      color: var(--gold2);
+      font-size: clamp(1.35rem, 6vw, 1.8rem);
+      color: var(--cream);
       line-height: 1.1;
-      text-align: center;
-      margin-bottom: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .invite-title {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: clamp(.95rem, 4vw, 1.25rem);
-      color: var(--text);
-      text-align: center;
-      line-height: 1.3;
-      margin-bottom: 18px;
-      max-width: 260px;
+    .invite-sub {
+      font-size: .8rem; font-weight: 300;
+      color: rgba(238,223,196,.5);
+      line-height: 1.4;
+      text-align: left;
+      margin-top: 3px;
     }
 
-    /* Divider */
-    .divider {
-      width: 75%; height: 1px;
-      background: linear-gradient(to right, transparent, rgba(191,128,16,.28), transparent);
-      margin-bottom: 16px;
-      flex-shrink: 0;
-    }
-
-    /* Detail rows */
+    /* ── Detail rows ── */
     .details {
       width: 100%;
       display: flex; flex-direction: column;
-      gap: 2px;
+      gap: 0;
       margin-bottom: 20px;
     }
     .detail-row {
       display: flex; align-items: center;
-      gap: 11px;
+      gap: 12px;
       min-height: 44px;
-      padding: 0 2px;
-      border-radius: 8px;
+      padding: 4px 0;
       text-decoration: none;
       color: inherit;
-      transition: background .16s;
       cursor: default;
+      border-bottom: 1px solid rgba(255,255,255,.04);
     }
-    a.detail-row {
-      cursor: pointer;
-    }
-    a.detail-row:hover,
-    a.detail-row:active {
-      background: rgba(191,128,16,.07);
-    }
+    .detail-row:last-child { border-bottom: none; }
+    a.detail-row { cursor: pointer; }
+    a.detail-row:active { opacity: .7; }
     .detail-icon {
-      width: 30px; height: 30px;
-      flex-shrink: 0;
+      width: 28px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
     }
     .detail-icon svg {
-      width: 17px; height: 17px;
-      stroke: rgba(191,128,16,.6);
+      width: 15px; height: 15px;
+      stroke: rgba(212,134,30,.55);
       fill: none;
-      stroke-width: 1.45;
+      stroke-width: 1.5;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
     .detail-text {
-      font-size: .88rem; font-weight: 400;
-      color: var(--text);
-      line-height: 1.2;
+      font-size: .85rem; font-weight: 400;
+      color: var(--cream);
+    }
+    .detail-arrow {
+      margin-left: auto;
+      font-size: .65rem;
+      opacity: .3;
     }
 
-    /* CTA */
+    /* ── CTA button ── */
     .cta-btn {
-      display: flex; align-items: center; justify-content: center;
-      width: 100%; max-width: 220px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%;
       height: 52px;
-      border-radius: 26px;
-      background: linear-gradient(100deg, #a83200 0%, #d94200 52%, #c8840e 100%);
-      color: #fff;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #8c2c04 0%, #c85c18 50%, #d4861e 100%);
+      color: var(--cream);
       font-family: 'Inter', sans-serif;
-      font-size: .9rem; font-weight: 600;
-      letter-spacing: .02em;
+      font-size: .88rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
       text-decoration: none;
       border: none;
       cursor: pointer;
       position: relative; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(180,60,10,.35), inset 0 1px 0 rgba(255,220,150,.15);
       transition: opacity .15s, transform .1s;
       -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
     }
     .cta-btn::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(255,255,255,.15) 0%, rgba(255,255,255,0) 52%);
+      background: linear-gradient(to bottom, rgba(255,255,255,.12) 0%, transparent 55%);
+    }
+    /* Wood grain texture overlay on button */
+    .cta-btn::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        92deg,
+        transparent, transparent 18px,
+        rgba(0,0,0,.06) 18px, rgba(0,0,0,.06) 19px
+      );
     }
     .cta-btn:hover  { opacity: .88; }
-    .cta-btn:active { transform: scale(.96); }
+    .cta-btn:active { transform: scale(.97); }
 
     /* ── Blur backdrop ── */
     #blur-layer {
       position: fixed; inset: 0; z-index: 10;
-      backdrop-filter: blur(16px) brightness(.68) saturate(.85);
-      -webkit-backdrop-filter: blur(16px) brightness(.68) saturate(.85);
+      backdrop-filter: blur(18px) brightness(.55) saturate(.7);
+      -webkit-backdrop-filter: blur(18px) brightness(.55) saturate(.7);
       pointer-events: none;
-      transition: opacity .65s ease;
+      transition: opacity .7s ease;
     }
     #blur-layer.gone { opacity: 0; }
 
@@ -220,18 +314,18 @@
       position: fixed; inset: 0; z-index: 11;
       touch-action: none;
       cursor: crosshair;
-      transition: opacity .65s ease;
+      transition: opacity .7s ease;
     }
     #fog-canvas.gone { opacity: 0; pointer-events: none; }
 
     /* ── Hint ── */
     #hint {
       position: fixed;
-      bottom: 36px; left: 50%;
+      bottom: 32px; left: 50%;
       transform: translateX(-50%);
       z-index: 20;
       display: flex; flex-direction: column; align-items: center;
-      gap: 10px;
+      gap: 9px;
       pointer-events: none;
       opacity: 0;
       transition: opacity .5s ease;
@@ -239,16 +333,15 @@
     #hint.visible { opacity: 1; }
     #hint.hidden  { opacity: 0; }
     #hint-text {
-      font-size: .68rem; font-weight: 400;
-      color: rgba(255,255,255,.42);
-      letter-spacing: .13em;
+      font-size: .66rem; font-weight: 400;
+      color: rgba(255,255,255,.38);
+      letter-spacing: .16em;
+      text-transform: uppercase;
       white-space: nowrap;
     }
-
-    /* Progress bar */
     #progress-wrap {
-      width: 120px; height: 3px;
-      background: rgba(255,255,255,.12);
+      width: 100px; height: 2px;
+      background: rgba(255,255,255,.1);
       border-radius: 99px;
       overflow: hidden;
     }
@@ -256,84 +349,81 @@
       height: 100%;
       width: 0%;
       border-radius: 99px;
-      background: linear-gradient(to right, rgba(191,128,16,.7), rgba(232,168,40,.9));
+      background: linear-gradient(to right, #c85c18, #e8b84a);
       transition: width .18s ease;
     }
   </style>
 </head>
 <body>
 
-<div class="orb orb-1" aria-hidden="true"></div>
-<div class="orb orb-2" aria-hidden="true"></div>
+<div id="wood-bg"    aria-hidden="true"></div>
+<div id="ember-glow" aria-hidden="true"></div>
+<div id="lamp-glow"  aria-hidden="true"></div>
+<img  id="venik-bg" src="venik.png" alt="" aria-hidden="true" draggable="false">
 
 <!-- ── Invitation ── -->
 <div id="app">
-  <div class="photo-wrap" id="photo-wrap">
-    <img id="guest-photo" src="" alt="">
-    <div class="photo-ring"></div>
-    <div class="photo-ring-outer"></div>
+
+  <!-- БАНЯ stamp -->
+  <div class="stamp-wrap">
+    <span class="stamp-label">приглашение</span>
+    <span class="stamp-title">В БАНЮ</span>
   </div>
 
-  <p class="greeting">Привет,</p>
-  <h1 class="guest-name" id="guest-name">Гость</h1>
-  <p class="invite-title" id="invite-title"></p>
+  <div class="burn-rule"><span class="burn-rule-icon">✦</span></div>
 
-  <div class="divider"></div>
+  <!-- Guest -->
+  <div class="guest-block">
+    <div class="photo-wrap" id="photo-wrap">
+      <img id="guest-photo" src="" alt="">
+      <div class="photo-ring"></div>
+    </div>
+    <div class="guest-text">
+      <p class="guest-greeting">Привет,</p>
+      <p class="guest-name" id="guest-name">Гость</p>
+      <p class="invite-sub" id="invite-title"></p>
+    </div>
+  </div>
 
+  <div class="burn-rule"><span class="burn-rule-icon">✦</span></div>
+
+  <!-- Details -->
   <div class="details">
     <div class="detail-row">
       <span class="detail-icon">
-        <!-- Calendar icon -->
-        <svg viewBox="0 0 24 24">
-          <rect x="3" y="4" width="18" height="18" rx="2"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
-          <line x1="8"  y1="2" x2="8"  y2="6"/>
-          <line x1="3"  y1="10" x2="21" y2="10"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       </span>
       <span class="detail-text" id="detail-date"></span>
     </div>
-
     <div class="detail-row">
       <span class="detail-icon">
-        <!-- Clock icon -->
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="9"/>
-          <polyline points="12 7 12 12 15.5 14.5"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14.5"/></svg>
       </span>
       <span class="detail-text" id="detail-time"></span>
     </div>
-
     <a class="detail-row" id="maps-link" href="#" target="_blank" rel="noopener noreferrer">
       <span class="detail-icon">
-        <!-- Pin icon -->
-        <svg viewBox="0 0 24 24">
-          <path d="M12 22s-7-6.686-7-11.5a7 7 0 0 1 14 0C19 15.314 12 22 12 22z"/>
-          <circle cx="12" cy="10.5" r="2.5"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 22s-7-6.686-7-11.5a7 7 0 0 1 14 0C19 15.314 12 22 12 22z"/><circle cx="12" cy="10.5" r="2.5"/></svg>
       </span>
       <span class="detail-text" id="detail-address"></span>
+      <span class="detail-arrow">↗</span>
     </a>
   </div>
 
   <a class="cta-btn" id="cta-btn" href="#" target="_blank" rel="noopener noreferrer">
-    Буду! 🔥
+    Буду! Топите баню 🔥
   </a>
+
 </div>
 
-<!-- ── Blur backdrop ── -->
+<!-- ── Blur + Fog ── -->
 <div id="blur-layer" aria-hidden="true"></div>
-
-<!-- ── Fog canvas ── -->
 <canvas id="fog-canvas" aria-label="Сотри пар, чтобы открыть приглашение"></canvas>
 
 <!-- ── Hint ── -->
 <div id="hint" role="status" aria-live="polite">
   <span id="hint-text">проведи пальцем</span>
-  <div id="progress-wrap">
-    <div id="progress-fill"></div>
-  </div>
+  <div id="progress-wrap"><div id="progress-fill"></div></div>
 </div>
 
 <script>
@@ -344,21 +434,19 @@
 // ════════════════════════════════════════════════════
 const CONFIG = {
   hostName:         "Маша",
-  hostPhoto:        "photo.jpg",          // фото именинницы (не используется в основном UI)
   date:             "7 июня, суббота",
   time:             "18:00",
   address:          "ул. Берёзовая, 12",
   mapsUrl:          "https://maps.google.com/?q=ул.+Берёзовая+12",
   telegramUsername: "+79167205415",
-  // Функции принимают имя гостя из URL
   telegramText:     (name) => `Привет, Маша! Это ${name} — буду ${CONFIG.date} в ${CONFIG.time} 🔥`,
-  inviteTitle:      (name) => `Я отмечаю день рождения\nи зову тебя в баню 🔥`,
-  defaultPhoto:     "",                   // если ?photo= не передан
+  inviteTitle:      () => `Маша отмечает день рождения\nи зовёт тебя в баню`,
+  defaultPhoto:     "",
   revealThreshold:  0.30,
 };
 
 // ════════════════════════════════════════════════════
-// URL PARAMS  ?name=Маша&photo=rita.jpg
+// URL PARAMS  ?name=Рита&photo=Рита.jpg
 // ════════════════════════════════════════════════════
 const params    = new URLSearchParams(location.search);
 const guestName = params.get("name")  || "Гость";
@@ -367,14 +455,13 @@ const photoSrc  = params.get("photo") || CONFIG.defaultPhoto;
 // ════════════════════════════════════════════════════
 // FILL CONTENT
 // ════════════════════════════════════════════════════
-document.getElementById("guest-name").textContent = guestName;
+document.getElementById("guest-name").textContent     = guestName;
 document.getElementById("detail-date").textContent    = CONFIG.date;
 document.getElementById("detail-time").textContent    = CONFIG.time;
 document.getElementById("detail-address").textContent = CONFIG.address;
-document.getElementById("maps-link").href = CONFIG.mapsUrl;
-document.getElementById("cta-btn").href =
-  `https://t.me/${CONFIG.telegramUsername}`;
-document.getElementById("invite-title").innerHTML =
+document.getElementById("maps-link").href             = CONFIG.mapsUrl;
+document.getElementById("cta-btn").href               = `https://t.me/${CONFIG.telegramUsername}`;
+document.getElementById("invite-title").innerHTML     =
   CONFIG.inviteTitle(guestName).replace(/\n/g, "<br>");
 
 // Photo
@@ -384,7 +471,7 @@ const photoWrap = document.getElementById("photo-wrap");
 if (photoSrc) {
   photoImg.src = photoSrc;
   photoImg.alt = guestName;
-  photoImg.onerror = () => showFallback();
+  photoImg.onerror = showFallback;
 } else {
   showFallback();
 }
@@ -392,7 +479,7 @@ if (photoSrc) {
 function showFallback() {
   photoImg.style.display = "none";
   const fb = document.createElement("div");
-  fb.className = "photo-fallback";
+  fb.className   = "photo-fallback";
   fb.textContent = guestName[0] || "?";
   photoWrap.insertBefore(fb, photoImg);
 }
@@ -400,22 +487,21 @@ function showFallback() {
 // ════════════════════════════════════════════════════
 // FOG SYSTEM
 // ════════════════════════════════════════════════════
-const canvas    = document.getElementById("fog-canvas");
-const ctx       = canvas.getContext("2d");
-const blurLayer = document.getElementById("blur-layer");
-const hint          = document.getElementById("hint");
-const hintText      = document.getElementById("hint-text");
-const progressFill  = document.getElementById("progress-fill");
+const canvas       = document.getElementById("fog-canvas");
+const ctx          = canvas.getContext("2d");
+const blurLayer    = document.getElementById("blur-layer");
+const hint         = document.getElementById("hint");
+const hintText     = document.getElementById("hint-text");
+const progressFill = document.getElementById("progress-fill");
 
 const noMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const DPR      = Math.min(devicePixelRatio || 1, 2);
 
 let W = 0, H = 0;
-let revealed     = false;
-let revealPhase  = 0;   // 0=untouched  1=some  2=done
-let lastCheck    = 0;
+let revealed    = false;
+let revealPhase = 0;
+let lastCheck   = 0;
 
-// ── Resize & init ─────────────────────────────────
 function resize() {
   W = window.innerWidth;
   H = window.innerHeight;
@@ -427,117 +513,110 @@ function resize() {
   if (!revealed) drawFog();
 }
 
-// ── Draw fog texture (called ONCE on init) ────────
+// ── Fog texture ──────────────────────────────────────
 function drawFog() {
-  // ── 1. Dense warm base ──────────────────────────
-  ctx.fillStyle = "rgba(182, 172, 160, 0.94)";
+  // Warm dense base — slightly brown-grey, not cold
+  ctx.fillStyle = "rgba(175, 162, 145, 0.95)";
   ctx.fillRect(0, 0, W, H);
 
-  // ── 2. Large uneven density patches ─────────────
-  for (let i = 0; i < 18; i++) {
-    const x  = Math.random() * W;
-    const y  = Math.random() * H;
-    const r  = 70 + Math.random() * 170;
-    const v  = 168 + (Math.random() * 28 | 0);
-    const a  = .08 + Math.random() * .14;
-    const g  = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0,   `rgba(${v}, ${v-7}, ${v-15}, ${a})`);
-    g.addColorStop(0.5, `rgba(${v}, ${v-7}, ${v-15}, ${a * .5})`);
+  // Uneven density blobs
+  for (let i = 0; i < 22; i++) {
+    const x = Math.random() * W, y = Math.random() * H;
+    const r = 60 + Math.random() * 180;
+    const v = 160 + (Math.random() * 32 | 0);
+    const a = .07 + Math.random() * .13;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0,   `rgba(${v},${v-8},${v-18},${a})`);
+    g.addColorStop(.5,  `rgba(${v},${v-8},${v-18},${a*.45})`);
     g.addColorStop(1,   "rgba(0,0,0,0)");
     ctx.fillStyle = g;
-    ctx.fillRect(x - r, y - r, r * 2, r * 2);
+    ctx.fillRect(x-r, y-r, r*2, r*2);
   }
 
-  // ── 3. Darker wispy zones (depth / unevenness) ──
-  for (let i = 0; i < 12; i++) {
-    const x = Math.random() * W;
-    const y = Math.random() * H;
-    const r = 35 + Math.random() * 90;
+  // Dark wispy shadow zones
+  for (let i = 0; i < 14; i++) {
+    const x = Math.random() * W, y = Math.random() * H;
+    const r = 30 + Math.random() * 100;
     const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, `rgba(110,102,92,${.06 + Math.random() * .1})`);
+    g.addColorStop(0, `rgba(90,72,55,${.05 + Math.random() * .1})`);
     g.addColorStop(1, "rgba(0,0,0,0)");
     ctx.fillStyle = g;
-    ctx.fillRect(x - r, y - r, r * 2, r * 2);
+    ctx.fillRect(x-r, y-r, r*2, r*2);
   }
 
-  // ── 4. Specular highlights (lamp reflections on wet glass) ──
-  const hlights = [
-    { x: .22, y: .14, r: 58, a: .22 },
-    { x: .71, y: .28, r: 42, a: .17 },
-    { x: .50, y: .06, r: 75, a: .14 },
-    { x: .12, y: .60, r: 48, a: .10 },
-    { x: .84, y: .72, r: 34, a: .13 },
-    { x: .60, y: .88, r: 55, a: .08 },
+  // Warm specular lamp reflections
+  const spots = [
+    {x:.20,y:.12,r:65,a:.24},{x:.75,y:.22,r:48,a:.18},
+    {x:.50,y:.05,r:80,a:.13},{x:.10,y:.65,r:52,a:.10},
+    {x:.88,y:.70,r:38,a:.14},{x:.55,y:.90,r:60,a:.08},
+    {x:.35,y:.48,r:42,a:.07},
   ];
-  for (const hl of hlights) {
-    const hx = hl.x * W, hy = hl.y * H;
-    const g  = ctx.createRadialGradient(hx, hy, 0, hx, hy, hl.r);
-    g.addColorStop(0,    `rgba(255, 252, 242, ${hl.a})`);
-    g.addColorStop(0.42, `rgba(255, 250, 238, ${hl.a * .38})`);
-    g.addColorStop(1,    "rgba(255,255,255,0)");
+  for (const s of spots) {
+    const sx = s.x*W, sy = s.y*H;
+    const g = ctx.createRadialGradient(sx,sy,0, sx,sy,s.r);
+    g.addColorStop(0,    `rgba(255,245,220,${s.a})`);
+    g.addColorStop(.45,  `rgba(255,238,200,${s.a*.35})`);
+    g.addColorStop(1,    "rgba(0,0,0,0)");
     ctx.fillStyle = g;
-    ctx.fillRect(hx - hl.r, hy - hl.r, hl.r * 2, hl.r * 2);
+    ctx.fillRect(sx-s.r, sy-s.r, s.r*2, s.r*2);
   }
 
-  // ── 5. Micro condensation drops ─────────────────
-  for (let i = 0; i < 320; i++) {
-    const x  = Math.random() * W;
-    const y  = Math.random() * H;
-    const rx = .4 + Math.random() * 2.6;
-    const ry = rx * (.9 + Math.random() * .7); // slightly elongated
-    const l  = 95 + (Math.random() * 65 | 0);
+  // Micro condensation drops
+  for (let i = 0; i < 350; i++) {
+    const x = Math.random()*W, y = Math.random()*H;
+    const rx = .35 + Math.random()*2.8;
+    const ry = rx * (.85 + Math.random()*.8);
+    const l  = 90 + (Math.random()*70|0);
     ctx.beginPath();
-    ctx.ellipse(x, y, rx, ry, Math.random() * Math.PI, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${l+38},${l+32},${l+24},${.07 + Math.random() * .14})`;
+    ctx.ellipse(x, y, rx, ry, Math.random()*Math.PI, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(${l+40},${l+33},${l+22},${.06+Math.random()*.15})`;
     ctx.fill();
   }
 
-  // ── 6. Faint vertical streaks (moisture tracks) ──
-  for (let i = 0; i < 10; i++) {
-    const x  = Math.random() * W;
-    const y0 = Math.random() * H * .45;
-    const y1 = y0 + 15 + Math.random() * 65;
-    const lw = .6 + Math.random() * 1.4;
+  // Faint vertical moisture streaks
+  for (let i = 0; i < 12; i++) {
+    const x  = Math.random()*W;
+    const y0 = Math.random()*H*.4;
+    const y1 = y0 + 14 + Math.random()*70;
     const g  = ctx.createLinearGradient(x, y0, x, y1);
-    g.addColorStop(0,   "rgba(150,140,130,0)");
-    g.addColorStop(.3,  `rgba(150,140,130,${.04 + Math.random() * .07})`);
-    g.addColorStop(.85, `rgba(150,140,130,${.03 + Math.random() * .04})`);
-    g.addColorStop(1,   "rgba(150,140,130,0)");
-    ctx.strokeStyle = g; ctx.lineWidth = lw;
-    ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x, y1); ctx.stroke();
+    g.addColorStop(0,   "rgba(140,128,112,0)");
+    g.addColorStop(.3,  `rgba(140,128,112,${.04+Math.random()*.07})`);
+    g.addColorStop(.88, `rgba(140,128,112,${.02+Math.random()*.04})`);
+    g.addColorStop(1,   "rgba(140,128,112,0)");
+    ctx.strokeStyle = g;
+    ctx.lineWidth = .5 + Math.random()*1.5;
+    ctx.beginPath(); ctx.moveTo(x,y0); ctx.lineTo(x,y1); ctx.stroke();
   }
 }
 
-// ── Soft erase brush ──────────────────────────────
-// Radial gradient: hard center → soft feathered edge
-// Feels like wiping with a warm palm, not clicking an eraser
+// ── Soft erase brush ─────────────────────────────────
 function eraseBrush(x, y, radius) {
   const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
   g.addColorStop(0,    "rgba(0,0,0,1)");
-  g.addColorStop(0.3,  "rgba(0,0,0,0.95)");
-  g.addColorStop(0.6,  "rgba(0,0,0,0.60)");
-  g.addColorStop(0.82, "rgba(0,0,0,0.20)");
+  g.addColorStop(0.28, "rgba(0,0,0,0.95)");
+  g.addColorStop(0.58, "rgba(0,0,0,0.62)");
+  g.addColorStop(0.80, "rgba(0,0,0,0.22)");
   g.addColorStop(1,    "rgba(0,0,0,0)");
   ctx.save();
   ctx.globalCompositeOperation = "destination-out";
-  ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI*2);
   ctx.fillStyle = g; ctx.fill();
   ctx.restore();
 }
 
-// ── Drip system ───────────────────────────────────
+// ── Drip system ──────────────────────────────────────
 const drips = [];
 
 function spawnDrip(x, y) {
   if (revealed) return;
   drips.push({
-    x:       x + (Math.random() - .5) * 14,
+    x:       x + (Math.random()-.5)*16,
     startY:  y,
     endY:    y,
-    targetY: Math.min(y + 55 + Math.random() * 120, H),
-    hw:      1.0 + Math.random() * 1.8,   // half-width of streak
-    alpha:   .5 + Math.random() * .38,
-    speed:   .5 + Math.random() * 1.1,
+    targetY: Math.min(y + 50 + Math.random()*130, H),
+    hw:      1.0 + Math.random()*1.8,
+    alpha:   .48 + Math.random()*.38,
+    speed:   .45 + Math.random()*1.1,
     alive:   true,
   });
 }
@@ -547,46 +626,40 @@ function drawDrips() {
     if (!d.alive) continue;
     d.endY = Math.min(d.endY + d.speed, d.targetY);
     if (d.endY >= d.targetY) d.alive = false;
-
     const len = d.endY - d.startY;
     if (len < 1) continue;
 
     ctx.save();
     ctx.globalCompositeOperation = "destination-out";
 
-    // Streak — soft horizontal gradient, hard along Y
     const sw = d.hw * 4;
-    const lg = ctx.createLinearGradient(d.x - sw, 0, d.x + sw, 0);
-    lg.addColorStop(0,    "rgba(0,0,0,0)");
-    lg.addColorStop(.22,  `rgba(0,0,0,${d.alpha * .65})`);
-    lg.addColorStop(.5,   `rgba(0,0,0,${d.alpha})`);
-    lg.addColorStop(.78,  `rgba(0,0,0,${d.alpha * .65})`);
-    lg.addColorStop(1,    "rgba(0,0,0,0)");
+    const lg = ctx.createLinearGradient(d.x-sw, 0, d.x+sw, 0);
+    lg.addColorStop(0,   "rgba(0,0,0,0)");
+    lg.addColorStop(.22, `rgba(0,0,0,${d.alpha*.65})`);
+    lg.addColorStop(.5,  `rgba(0,0,0,${d.alpha})`);
+    lg.addColorStop(.78, `rgba(0,0,0,${d.alpha*.65})`);
+    lg.addColorStop(1,   "rgba(0,0,0,0)");
     ctx.fillStyle = lg;
-    ctx.fillRect(d.x - sw, d.startY, sw * 2, len);
+    ctx.fillRect(d.x-sw, d.startY, sw*2, len);
 
-    // Teardrop bulge at leading edge
     if (len > 8) {
       const dr = d.hw * 4;
-      const dg = ctx.createRadialGradient(d.x, d.endY, 0, d.x, d.endY + dr * .35, dr);
+      const dg = ctx.createRadialGradient(d.x, d.endY, 0, d.x, d.endY+dr*.35, dr);
       dg.addColorStop(0,   `rgba(0,0,0,${d.alpha})`);
-      dg.addColorStop(0.7, `rgba(0,0,0,${d.alpha * .4})`);
+      dg.addColorStop(.7,  `rgba(0,0,0,${d.alpha*.4})`);
       dg.addColorStop(1,   "rgba(0,0,0,0)");
-      ctx.beginPath(); ctx.arc(d.x, d.endY, dr, 0, Math.PI * 2);
+      ctx.beginPath(); ctx.arc(d.x, d.endY, dr, 0, Math.PI*2);
       ctx.fillStyle = dg; ctx.fill();
     }
-
     ctx.restore();
   }
-
-  // Prune dead drips
   if (drips.length > 50) {
     const alive = drips.filter(d => d.alive);
     drips.length = 0; drips.push(...alive);
   }
 }
 
-// ── Reveal check ──────────────────────────────────
+// ── Reveal check ─────────────────────────────────────
 function checkReveal() {
   const now = performance.now();
   if (now - lastCheck < 260 || revealed) return;
@@ -594,16 +667,12 @@ function checkReveal() {
 
   const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
   let transparent = 0, total = 0;
-  // Sample every 16th pixel (alpha channel = index 3, 7, 11...)
-  for (let i = 3; i < data.length; i += 4 * 16) {
+  for (let i = 3; i < data.length; i += 4*16) {
     total++;
     if (data[i] < 30) transparent++;
   }
-
   const ratio = total > 0 ? transparent / total : 0;
-
-  // Update progress bar (0 → 100% maps to 0 → revealThreshold)
-  const pct = Math.min(ratio / CONFIG.revealThreshold * 100, 100);
+  const pct   = Math.min(ratio / CONFIG.revealThreshold * 100, 100);
   progressFill.style.width = pct + "%";
 
   if (revealPhase === 0 && ratio > .06) {
@@ -623,7 +692,6 @@ function doReveal() {
   revealed = true;
   hint.classList.remove("visible");
   hint.classList.add("hidden");
-
   if (noMotion) {
     canvas.style.display    = "none";
     blurLayer.style.display = "none";
@@ -637,15 +705,14 @@ function doReveal() {
   }
 }
 
-// ── Animation loop ────────────────────────────────
+// ── Loop ─────────────────────────────────────────────
 function loop() {
   if (!revealed) drawDrips();
   requestAnimationFrame(loop);
 }
 
-// ── Pointer tracking ──────────────────────────────
-let prevX = null, prevY = null;
-let lastMoveTime = 0;
+// ── Pointer ──────────────────────────────────────────
+let prevX = null, prevY = null, lastMoveTime = 0;
 let stationaryTimer = null;
 const BRUSH_R = 54;
 
@@ -654,77 +721,41 @@ function onStart(x, y) {
   prevX = x; prevY = y;
   lastMoveTime = performance.now();
   eraseBrush(x, y, BRUSH_R);
-
-  // Show hint on first touch
   hint.classList.remove("hidden");
   hint.classList.add("visible");
-
-  // Drip after staying still
   clearTimeout(stationaryTimer);
   stationaryTimer = setTimeout(() => spawnDrip(x, y), 380);
-
   checkReveal();
 }
-
 function onMove(x, y) {
   if (revealed || prevX === null) return;
-
-  const dist = Math.hypot(x - prevX, y - prevY);
+  const dist = Math.hypot(x-prevX, y-prevY);
   const dt   = performance.now() - lastMoveTime;
-
-  // Interpolate brush along path for smooth erase
-  const steps = Math.max(Math.ceil(dist / 10), 1);
+  const steps = Math.max(Math.ceil(dist/10), 1);
   for (let i = 1; i <= steps; i++) {
-    const t = i / steps;
-    eraseBrush(prevX + (x - prevX) * t, prevY + (y - prevY) * t, BRUSH_R);
+    const t = i/steps;
+    eraseBrush(prevX+(x-prevX)*t, prevY+(y-prevY)*t, BRUSH_R);
   }
-
-  // Fast swipe → drip
-  const speed = dist / Math.max(dt, 1);
-  if (speed > 1.6 && Math.random() < .22) spawnDrip(x, y);
-
+  if (dist/Math.max(dt,1) > 1.6 && Math.random() < .22) spawnDrip(x, y);
   prevX = x; prevY = y;
   lastMoveTime = performance.now();
-
   clearTimeout(stationaryTimer);
   stationaryTimer = setTimeout(() => spawnDrip(x, y), 380);
-
   checkReveal();
 }
+function onEnd() { prevX = null; prevY = null; clearTimeout(stationaryTimer); }
 
-function onEnd() {
-  prevX = null; prevY = null;
-  clearTimeout(stationaryTimer);
-}
-
-// Mouse
 canvas.addEventListener("mousedown",  e => onStart(e.clientX, e.clientY));
 canvas.addEventListener("mousemove",  e => { if (prevX !== null) onMove(e.clientX, e.clientY); });
 canvas.addEventListener("mouseup",    onEnd);
 canvas.addEventListener("mouseleave", onEnd);
+canvas.addEventListener("touchstart", e => { e.preventDefault(); onStart(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+canvas.addEventListener("touchmove",  e => { e.preventDefault(); onMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+canvas.addEventListener("touchend",   e => { e.preventDefault(); onEnd(); }, { passive: false });
 
-// Touch
-canvas.addEventListener("touchstart", e => {
-  e.preventDefault();
-  onStart(e.touches[0].clientX, e.touches[0].clientY);
-}, { passive: false });
-canvas.addEventListener("touchmove", e => {
-  e.preventDefault();
-  onMove(e.touches[0].clientX, e.touches[0].clientY);
-}, { passive: false });
-canvas.addEventListener("touchend", e => {
-  e.preventDefault(); onEnd();
-}, { passive: false });
-
-// ── Boot ──────────────────────────────────────────
-window.addEventListener("resize", () => {
-  if (!revealed) { ctx.setTransform(1,0,0,1,0,0); resize(); }
-});
-
+window.addEventListener("resize", () => { if (!revealed) { ctx.setTransform(1,0,0,1,0,0); resize(); } });
 resize();
 loop();
-
-// Hint appears on first touch (see onStart)
 </script>
 </body>
 </html>
