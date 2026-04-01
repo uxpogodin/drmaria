@@ -408,6 +408,12 @@
       <span class="detail-text" id="detail-address"></span>
       <span class="detail-arrow">↗</span>
     </a>
+    <div class="detail-row">
+      <span class="detail-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 12c0-1.5 1.5-3 3-3s3 1.5 3 3-1.5 3-3 3-3-1.5-3-3z"/><path d="M15 9c0-1.5 1.5-3 3-3s3 1.5 3 3-1.5 3-3 3-3-1.5-3-3z"/><path d="M6 12c2 3 4 4.5 6 4.5s4-1.5 6-4.5"/></svg>
+      </span>
+      <span class="detail-text">Взять купальник</span>
+    </div>
   </div>
 
   <a class="cta-btn" id="cta-btn" href="#" target="_blank" rel="noopener noreferrer">
@@ -434,23 +440,33 @@
 // ════════════════════════════════════════════════════
 const CONFIG = {
   hostName:         "Маша",
-  date:             "7 июня, суббота",
-  time:             "18:00",
+  date:             "14 апреля, вторник",
+  time:             "19:00 – 23:00",
   address:          "ул. Берёзовая, 12",
   mapsUrl:          "https://maps.google.com/?q=ул.+Берёзовая+12",
   telegramUsername: "+79167205415",
-  telegramText:     (name) => `Привет, Маша! Это ${name} — буду ${CONFIG.date} в ${CONFIG.time} 🔥`,
-  inviteTitle:      () => `Маша отмечает день рождения\nи зовёт тебя в баню`,
+  telegramText:     (name) => `Привет, Маша! Это ${name} — буду 14 апреля в 19:00 🔥`,
+  inviteTitle:      () => `Маша отмечает день рождения\nв шоу-бане — танцы, песни, пар 🎤`,
   defaultPhoto:     "",
   revealThreshold:  0.30,
 };
 
 // ════════════════════════════════════════════════════
-// URL PARAMS  ?name=Рита&photo=Рита.jpg
+// GUESTS  — добавляй новых сюда
+// URL: ?guest=rita
 // ════════════════════════════════════════════════════
-const params    = new URLSearchParams(location.search);
-const guestName = params.get("name")  || "Гость";
-const photoSrc  = params.get("photo") || CONFIG.defaultPhoto;
+const GUESTS = {
+  rita:    { name: "Рита",   photo: "Рита.png"   },
+  ksyusha: { name: "Ксюша",  photo: "Ксюша.png"  },
+  lena:    { name: "Лена",   photo: "Лена.png"    },
+  natasha: { name: "Наташа", photo: "Наташа.png"  },
+};
+
+const params = new URLSearchParams(location.search);
+const guestKey  = params.get("guest");
+const guest     = GUESTS[guestKey] || null;
+const guestName = guest?.name  || params.get("name")  || "Гость";
+const photoSrc  = guest?.photo || params.get("photo") || CONFIG.defaultPhoto;
 
 // ════════════════════════════════════════════════════
 // FILL CONTENT
